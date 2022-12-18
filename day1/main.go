@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -23,9 +24,19 @@ func main()  {
   for scanner.Scan() {
 
     contents := scanner.Text()
+    elfs := make([]int, 0)
+    current_total := 0
 
     if strings.Compare(contents, "\n") == 0 {
+
+      elfs = append(elfs, current_total)
+      current_total = 0
       
+    } else {
+
+      num, _ := strconv.Atoi(contents)
+      current_total += num
+
     }
 
   }
