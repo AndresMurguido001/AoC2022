@@ -16,10 +16,22 @@ type Pair struct {
 func main() {
 	f, err := os.Open("./input.txt")
 
-	my_choices := map[string]Pair{
-		"X": {Key: "Rock", Val: 1},
-		"Y": {Key: "Paper", Val: 2},
-		"Z": {Key: "Scissors", Val: 3},
+	my_choices := map[string]map[string]int{
+    "A": {
+      "X": 3,
+      "Y": 1,
+      "Z": 2,
+    },
+    "B": {
+      "X": 1,
+      "Y": 2,
+      "Z": 3,
+    },
+    "C": {
+      "X": 2,
+      "Y": 3,
+      "Z": 1,
+    },
 	}
 
 	// enemy_choices := map[string]Pair {
@@ -28,29 +40,31 @@ func main() {
 	//   "C": my_choices["Z"],
 	// }
 	//
-	// results := map[int]string {
-	//   0:"Loss",
-	//   3:"Draw",
-	//   6:"Win",
-	// }
 
-	game_results := map[string]map[string]int{
-		"A": {
-			"X": 3,
-			"Y": 6,
-			"Z": 0,
-		},
-		"B": {
-			"X": 0,
-			"Y": 3,
-			"Z": 6,
-		},
-		"C": {
-			"X": 6,
-			"Y": 0,
-			"Z": 3,
-		},
+
+	result := map[string]int{
+		"X": 0, 
+		"Y": 3,
+		"Z": 6,
 	}
+
+	// game_results := map[string]map[string]int{
+	// 	"A": {
+	// 		"X": 3,
+	// 		"Y": 6,
+	// 		"Z": 0,
+	// 	},
+	// 	"B": {
+	// 		"X": 0,
+	// 		"Y": 3,
+	// 		"Z": 6,
+	// 	},
+	// 	"C": {
+	// 		"X": 6,
+	// 		"Y": 0,
+	// 		"Z": 3,
+	// 	},
+	// }
 
 	if err != nil {
 		log.Fatal("Error: Could not open file")
@@ -59,14 +73,17 @@ func main() {
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-	total_score := 0
+	// total_score := 0
+  part2_score := 0
 
 	for scanner.Scan() {
 
 		contents := scanner.Text()
 		choices := strings.Split(contents, " ")
-		total_score += game_results[choices[0]][choices[1]] + my_choices[choices[1]].Val
+		// total_score += game_results[choices[0]][choices[1]] + my_choices[choices[1]].Val
 
+    part2_score += result[choices[1]] + my_choices[choices[0]][choices[1]]
 	}
-	fmt.Println("TOTAL SCORE: ", total_score)
+  fmt.Println("Part 2 Final Score: ", part2_score)
 }
+
